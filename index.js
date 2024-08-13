@@ -85,7 +85,7 @@ function getNext(days, h, m, s) {
   return getFirstDate(days.map((day) => nextDay(day, h, m, s)))
 }
 
-function parseStart(string) {
+function parse(string) {
   if (!string) return
 
   if (string.includes('now')) {
@@ -129,10 +129,10 @@ function parseStart(string) {
       var [date, time] = string.split(' at ')
       date = date.replace('every', 'next')
       time = time.split(' and ')
-      return getFirstDate(time.map((t) => parseStart(`${date} at ${t}`)))
+      return getFirstDate(time.map((t) => parse(`${date} at ${t}`)))
     } else {
       var next = string.replace('every', 'next')
-      return parseStart(next)
+      return parse(next)
     }
   }
 
@@ -141,7 +141,7 @@ function parseStart(string) {
       if (string.includes(',')) {
         var str = string.replace('every', '')
         return getFirstDate(
-          str.split(',').map((v) => parseStart(`next ${v.trim()}`))
+          str.split(',').map((v) => parse(`next ${v.trim()}`))
         )
       } else {
         return processEvery(string)
@@ -153,8 +153,8 @@ function parseStart(string) {
   }
 }
 
-function parseSchedule(str) {
-  return parseStart(str)
+function next(str) {
+  return parse(str)
 }
 
-module.exports = { parseSchedule }
+module.exports = { next }
