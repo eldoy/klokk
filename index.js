@@ -27,8 +27,8 @@ function str2day(str) {
   }
 }
 
-function is(unit, string) {
-  return [string, `${string}s`].includes(unit)
+function is(unit, str) {
+  return [str, `${str}s`].includes(unit)
 }
 
 function addDiff(diff, d) {
@@ -97,33 +97,30 @@ function processEvery(str) {
   }
 }
 
-function parse(string) {
-  if (!string) return
+function parse(str) {
+  if (!str) return
 
-  if (string.includes('now')) {
-    if (string == 'now') {
+  if (str.includes('now')) {
+    if (str == 'now') {
       return new Date()
     }
-    if (string.includes('from')) {
-      var [diff] = string.split(' from ')
+    if (str.includes('from')) {
+      var [diff] = str.split(' from ')
       return addDiff(diff, new Date())
     }
   }
 
-  if (string.includes('at')) {
-    var [date, time] = string.split(' at ')
+  if (str.includes('at')) {
+    var [date, time] = str.split(' at ')
     var [h, m, s] = time.split(':')
 
     if (date.includes('next')) {
       var [, day] = date.split(' ')
-      var [h, m, s] = time.split(':')
-      var next = nextDay(day, h, m, s)
-      return next
+      return nextDay(day, h, m, s)
     }
 
     if (date.includes('to')) {
       var [from, to] = date.split(' to ')
-
       var fromIdx = weekdays.findIndex((v) => v == from)
       var toIdx = weekdays.findIndex((v) => v == to)
 
@@ -136,18 +133,18 @@ function parse(string) {
     }
   }
 
-  if (string.includes('every')) {
-    if (string.includes('at')) {
-      if (string.includes(',')) {
-        var str = string.replace('every', '')
+  if (str.includes('every')) {
+    if (str.includes('at')) {
+      if (str.includes(',')) {
+        str = str.replace('every', '')
         return getFirstDate(
           str.split(',').map((v) => parse(`next ${v.trim()}`))
         )
       } else {
-        return processEvery(string)
+        return processEvery(str)
       }
     } else {
-      var str = string.replace('every', '').trim()
+      str = str.replace('every', '').trim()
       return addDiff(str, new Date())
     }
   }
