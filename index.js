@@ -100,21 +100,14 @@ function parseStart(string) {
 
   if (string.includes('at')) {
     var [date, time] = string.split(' at ')
+    var [h, m, s] = time.split(':')
+
     if (date.includes('next')) {
       var [, day] = date.split(' ')
       var [h, m, s] = time.split(':')
       var next = nextDay(day, h, m, s)
       return next
     }
-  }
-}
-
-function parseRepeat(string) {
-  if (!string) return
-
-  if (string.includes('at')) {
-    var [date, time] = string.split(' at ')
-    var [h, m, s] = time.split(':')
 
     if (date.includes('to')) {
       var [from, to] = date.split(' to ')
@@ -161,9 +154,7 @@ function parseRepeat(string) {
 }
 
 function parseSchedule(options) {
-  var start = parseStart(options.start)
-  var repeat = parseRepeat(options.repeat)
-  return [start, repeat].sort((a, b) => a - b)[0]
+  return parseStart(options.start)
 }
 
 module.exports = { parseSchedule }

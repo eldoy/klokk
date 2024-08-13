@@ -76,13 +76,13 @@ test('parse repeat schedule', async () => {
   var hours = now.getHours()
   var tomorrow = today + 1
 
-  result = util.parseSchedule({ repeat: 'monday to friday at 04' })
+  result = util.parseSchedule({ start: 'monday to friday at 04' })
   var nextDay = tomorrow > 5 ? 1 : tomorrow
   expected = next(nextDay, 4)
   assert.equal(expected.getTime(), result.getTime())
 
   result = util.parseSchedule({
-    repeat: 'monday, tuesday, wednesday, friday at 04'
+    start: 'monday, tuesday, wednesday, friday at 04'
   })
 
   if (today == 3) {
@@ -96,16 +96,16 @@ test('parse repeat schedule', async () => {
   expected = next(nextDay, 4)
   assert.equal(expected.getTime(), result.getTime())
 
-  result = util.parseSchedule({ repeat: 'every monday at 04' })
+  result = util.parseSchedule({ start: 'every monday at 04' })
   expected = next(1, 4)
   assert.equal(expected.getTime(), result.getTime())
 
-  result = util.parseSchedule({ repeat: 'every friday at 03:00 and 19:30' })
+  result = util.parseSchedule({ start: 'every friday at 03:00 and 19:30' })
   expected = next(5, 3)
   assert.equal(expected.getTime(), result.getTime())
 
   result = util.parseSchedule({
-    repeat: 'every friday at 03:00, sunday at 04, saturday at 10:30:30'
+    start: 'every friday at 03:00, sunday at 04, saturday at 10:30:30'
   })
   nextDay = 5
   var time = [3]
@@ -120,7 +120,7 @@ test('parse repeat schedule', async () => {
   assert.equal(expected.getTime(), result.getTime())
 
   result = util.parseSchedule({
-    repeat: 'every 10 seconds'
+    start: 'every 10 seconds'
   })
 
   expected = new Date()
