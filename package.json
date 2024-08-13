@@ -1,0 +1,11 @@
+{
+  "name": "klokk",
+  "version": "0.1.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --test --watch"
+  },
+  "author": "Vidar Eldøy <vidar@eldoy.com>",
+  "license": "ISC",
+  "description": "Timer strings"
+}
