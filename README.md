@@ -19,6 +19,7 @@ var next = klokk.next('1 hour from now')
 
 Example strings supported, all numbers can be exchanged:
 
+- now
 - 10 seconds from now
 - 1 minute from now
 - 24 hours from now
