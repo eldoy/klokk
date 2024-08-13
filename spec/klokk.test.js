@@ -34,7 +34,7 @@ function next(day = 0, h = 0, m = 0, s = 0) {
   return now
 }
 
-test('parse start schedule', async () => {
+test('basic timer strings', async () => {
   result = klokk.next('now')
   expected = now()
   var diff = expected - result.getTime()
@@ -70,7 +70,7 @@ test('parse start schedule', async () => {
   assert.equal(expected.getTime(), result.getTime())
 })
 
-test('parse repeat schedule', async () => {
+test('advanced timer strings', async () => {
   var now = new Date()
   var today = now.getDay()
   var hours = now.getHours()

@@ -85,6 +85,18 @@ function getNext(days, h, m, s) {
   return getFirstDate(days.map((day) => nextDay(day, h, m, s)))
 }
 
+function processEvery(str) {
+  if (str.includes('and')) {
+    var [date, time] = str.split(' at ')
+    date = date.replace('every', 'next')
+    time = time.split(' and ')
+    return getFirstDate(time.map((t) => parse(`${date} at ${t}`)))
+  } else {
+    var next = str.replace('every', 'next')
+    return parse(next)
+  }
+}
+
 function parse(string) {
   if (!string) return
 
@@ -121,18 +133,6 @@ function parse(string) {
     if (date.includes(',')) {
       var days = date.split(',').map((v) => v.trim())
       return getNext(days, h, m, s)
-    }
-  }
-
-  function processEvery(string) {
-    if (string.includes('and')) {
-      var [date, time] = string.split(' at ')
-      date = date.replace('every', 'next')
-      time = time.split(' and ')
-      return getFirstDate(time.map((t) => parse(`${date} at ${t}`)))
-    } else {
-      var next = string.replace('every', 'next')
-      return parse(next)
     }
   }
 
