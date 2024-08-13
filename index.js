@@ -153,8 +153,8 @@ function parseStart(string) {
   }
 }
 
-function parseSchedule(options) {
-  return parseStart(options.start)
+function parseSchedule(str) {
+  return parseStart(str)
 }
 
 module.exports = { parseSchedule }
