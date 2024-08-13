@@ -8,25 +8,6 @@ var weekdays = [
   'saturday'
 ]
 
-function str2day(str) {
-  switch (str) {
-    case 'sunday':
-      return 0
-    case 'monday':
-      return 1
-    case 'tuesday':
-      return 2
-    case 'wednesday':
-      return 3
-    case 'thursday':
-      return 4
-    case 'friday':
-      return 5
-    case 'saturday':
-      return 6
-  }
-}
-
 function is(unit, str) {
   return [str, `${str}s`].includes(unit)
 }
@@ -59,7 +40,7 @@ function addDiff(diff, d) {
 
 function nextDay(day, h = 0, m = 0, s = 0) {
   if (typeof day == 'string') {
-    day = str2day(day)
+    day = weekdays.indexOf(day)
   }
 
   var date = new Date()
