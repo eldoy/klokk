@@ -81,13 +81,15 @@ function processEvery(str) {
 function parse(str) {
   if (!str) return
 
+  var now = new Date()
+
   if (str.includes('now')) {
     if (str == 'now') {
-      return new Date()
+      return now
     }
     if (str.includes('from')) {
       var [diff] = str.split(' from ')
-      return addDiff(diff, new Date())
+      return addDiff(diff, now)
     }
   }
 
@@ -102,10 +104,11 @@ function parse(str) {
 
     if (date.includes('to')) {
       var [from, to] = date.split(' to ')
-      var fromIdx = weekdays.findIndex((v) => v == from)
-      var toIdx = weekdays.findIndex((v) => v == to)
+      var fromIdx = weekdays.indexOf(from)
+      var toIdx = weekdays.indexOf(to)
+      var days = weekdays.slice(fromIdx, toIdx + 1)
 
-      return getNext(weekdays.slice(fromIdx, toIdx + 1), h, m, s)
+      return getNext(days, h, m, s)
     }
 
     if (date.includes(',')) {
@@ -126,7 +129,7 @@ function parse(str) {
       }
     } else {
       str = str.replace('every', '').trim()
-      return addDiff(str, new Date())
+      return addDiff(str, now)
     }
   }
 }
